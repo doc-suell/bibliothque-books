@@ -1,0 +1,31 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Détail de l'auteur</h1>
+    <article>
+        <h2>
+            {{ author.firstName|upper }} {{ author.lastName }}
+        </h2>
+        <p>
+            {{ author.dateOfBirth|date('d-m-Y') }}
+        </p>
+    </article>
+
+    <h3>Liste des livres de l'auteur</h3>
+    <ul>
+        {% for book in author.books %}
+            <li>
+                <a href="{{path('book_detail', {id: book.id})}}">
+                    {{ book.title }}
+                </a>
+            </li>
+        {% endfor %}
+    </ul>
+
+    <a href="{{ path('author_listing') }}" class="btn btn-secondary">Retour</a>
+    {% if is_granted('ROLE_ADMIN') %}
+        <a href="{{ path('author_edit', {id: author.id}) }}" class="btn btn-primary">Modifier l'auteur</a>
+        <a href="{{ path('author_delete', {id: author.id}) }}" class="btn btn-danger">Supprimer l'auteur</a>
+    {% endif %}
+
+{% endblock %}

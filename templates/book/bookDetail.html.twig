@@ -1,0 +1,38 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Détail du livre</h1>
+    <article>
+        <img src="{{ vich_uploader_asset(book, 'coverImageFile') }}">
+        <h2>
+            {{ book.title }}
+        </h2>
+        <p>
+            Ecrit par {{ book.author }}
+        </p>
+        <p>ISBN : {{ book.isbn }}</p>
+
+        <h3>Genres du livre</h3>
+        <ul>
+            {% for kind in book.kinds %}
+                <li>{{ kind.label }}</li>
+            {% endfor %}
+        </ul>
+
+        <h3>Détails de l'auteur</h3>
+        <p>
+            Prénom: {{ book.author.firstName }}
+            <br>
+            Nom: {{ book.author.lastName }}
+            <br>
+            <a href="{{ path('author_detail', {id: book.author.id}) }}">
+                Lien de l'auteur
+            </a>
+        </p>
+    </article>
+    <a href="{{ path('book_listing') }}" class="btn btn-secondary">Retour</a>
+    {% if is_granted('ROLE_ADMIN') %}
+        <a href="{{ path('book_edit', {id: book.id}) }}" class="btn btn-primary">Modifier le livre</a>
+        <a href="{{ path('book_delete', {id: book.id}) }}" class="btn btn-danger">Supprimer le livre</a>
+    {% endif %}
+{% endblock %}

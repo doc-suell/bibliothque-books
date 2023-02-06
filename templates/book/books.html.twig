@@ -1,0 +1,52 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Liste des livres</h1>
+    <div id="search-form">
+        <div class="d-flex justify-content-end">
+            <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#search-form-content" aria-expanded="false" aria-controls="search-form-content">
+                Recherche
+            </button>
+        </div>
+        <div id="search-form-content" class="collapse">
+            {{ form_start(form)}}
+            <div class="row">
+                <div class="col col-md-3">
+                    {{form_row(form.title)}}
+                </div>
+                <div class="col col-md-3">
+                    {{form_row(form.author)}}
+                </div>
+                <div class="col col-md-3">
+                    {{form_row(form.isbn)}}
+                </div>
+                <div class="col col-md-3">
+                    {{form_row(form.kinds)}}
+                </div>
+            </div>
+            <div class="d-flex justify-content-end">
+                {{ form_row(form.save) }}
+            </div>
+            {{ form_end(form) }}
+        </div>
+    </div>
+    <a href="{{ path('book_new')}}">Créer un nouveau livre</a>
+    <div class="row">
+        {% for book in books %}
+            <div class="col col-3">
+                <article class="card">
+                    <img style="  height: 180px;" src="{{ vich_uploader_asset(book, 'coverImageFile') }}" class="card-img-top" alt="">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ book.title }}</h5>
+                        <p class="card-text">
+                            Ecrit par {{ book.author }}
+                            <br>
+                            ISBN : {{ book.isbn }}
+                        </p>
+                        <a href="{{ path('book_detail', {id: book.id}) }}" class="btn btn-outline-primary">Voir le détail</a>
+                    </div>
+                </article>
+            </div>
+        {% endfor %}
+    </div>
+{% endblock body %}

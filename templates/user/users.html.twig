@@ -1,0 +1,44 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello UserController!{% endblock %}
+
+{% block body %}
+    <table class="table table-striped">
+        <thead class="bg-warning">
+        <th>Id</th>
+        <th>Prénom</th>
+        <th>Nom</th>
+        <th>e-mail</th>
+        <th>roles</th>
+        </thead>
+        <tbody>
+        {% for user in users %}
+            <tr>
+                <td>
+                    {{ user.id }}
+                </td>
+                <td>
+                    {{ user.firstName }}
+                </td>
+                <td>
+                    {{ user.lastName }}
+                </td>
+                <td>
+                    {{ user.email }}
+                </td>
+                <td> {{user.roles|join(', ')}}</td>
+                <td class="text-end">
+                    <a href="{{ path('user_edit', {id: user.id}) }}">
+                        <i class="fa fa-pen text-primary"></i>
+                    </a>
+
+                    <a href="{{ path('user_delete', {id: user.id}) }}">
+                        <i class="fa fa-trash text-danger"></i>
+                    </a>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+{% endblock %}

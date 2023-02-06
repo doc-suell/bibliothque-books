@@ -1,0 +1,22 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Liste des auteurs</h1>
+    <a href="{{ path('author_new')}}">Créer un nouvel auteur</a>
+    <div class="row">
+        {% for author in authors %}
+            <div class="col col-3">
+                <article class="card">
+                    <img src="" class="card-img-top" alt="">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ author.firstName|upper }} {{ author.lastName }}</h5>
+                        <p class="card-text">
+                            {{ author.dateOfBirth|date('d-m-Y') }}
+                        </p>
+                        <a href="{{ path('author_detail', {id: author.id}) }}" class="btn btn-primary">Voir le détail</a>
+                    </div>
+                </article>
+            </div>
+        {% endfor %}
+    </div>
+{% endblock body %}
